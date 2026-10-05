@@ -1,0 +1,126 @@
+{
+  "$comment": "Demo profile for a fictional developer. Copy this file to the root of your <username>/<username> repository, replace the text, then run: python -m studio build profile.json. Add \"repository\": \"<username>/<username>\" so the language switch links work on your profile page.",
+  "theme": "aurora",
+  "languages": ["en", "bg"],
+  "assets": "assets/studio",
+  "sections": [
+    {
+      "type": "hero",
+      "kicker": {"en": "Alex Morgan · full-stack developer", "bg": "Алекс Морган · full-stack разработчик"},
+      "headline": {"en": ["Interfaces that move,", "systems that hold."], "bg": ["Интерфейси в движение,", "системи, които издържат."]},
+      "lines": {
+        "en": ["Web apps · developer tools · Discord bots · automation"],
+        "bg": ["Уеб приложения · инструменти · Discord ботове · автоматизации"]
+      },
+      "chips": ["Orbit CLI", "Pixel Board", "Relay Bot"]
+    },
+    {
+      "type": "markdown",
+      "text": {
+        "en": "### 👋 Hi, I'm Alex\n\nI build fast, accessible web products and the tooling around them. This whole page is generated from one JSON file — no JavaScript, no external services.",
+        "bg": "### 👋 Здравейте, аз съм Алекс\n\nСъздавам бързи и достъпни уеб продукти и инструментите около тях. Цялата страница е генерирана от един JSON файл — без JavaScript и без външни услуги."
+      }
+    },
+    {"type": "divider"},
+    {
+      "type": "heading",
+      "anchor": "work",
+      "kicker": {"en": "Selected work", "bg": "Избрана работа"},
+      "title": {"en": "Things I've shipped", "bg": "Какво съм създал"}
+    },
+    {
+      "type": "projects",
+      "items": [
+        {
+          "name": "Orbit CLI",
+          "kind": {"en": "Developer tool", "bg": "Инструмент за разработчици"},
+          "description": {
+            "en": "A command line that checks a project before it ships: tests, types, secrets and broken links in one pass.",
+            "bg": "Команден ред, който проверява проекта преди публикуване: тестове, типове, тайни ключове и счупени връзки наведнъж."
+          },
+          "tags": ["TypeScript", "Node.js", "GitHub Actions"],
+          "motif": "scan",
+          "url": "https://github.com/yyakowvw/readme-studio"
+        },
+        {
+          "name": "Pixel Board",
+          "kind": {"en": "Realtime web app", "bg": "Уеб приложение в реално време"},
+          "description": {
+            "en": "A shared canvas where a whole community draws together, with moderation tools and history replay.",
+            "bg": "Общо платно, на което цяла общност рисува заедно, с инструменти за модерация и преглед на историята."
+          },
+          "tags": ["React", "WebSockets", "PostgreSQL"],
+          "motif": "hex"
+        },
+        {
+          "name": "Relay Bot",
+          "kind": {"en": "Discord automation", "bg": "Discord автоматизация"},
+          "description": {
+            "en": "Role sync, applications and announcements for a gaming community, with signed webhooks between services.",
+            "bg": "Синхронизиране на роли, кандидатури и обявления за гейминг общност, с подписани webhook-и между услугите."
+          },
+          "tags": ["discord.js", "Cloudflare Workers"],
+          "motif": "network"
+        }
+      ]
+    },
+    {"type": "divider"},
+    {
+      "type": "highlights",
+      "items": [
+        {"value": "3", "label": {"en": "products in production", "bg": "продукта в употреба"}},
+        {"value": "120+", "label": {"en": "automated tests", "bg": "автоматични теста"}},
+        {"value": "2", "label": {"en": "languages on every page", "bg": "езика на всяка страница"}},
+        {"value": "0", "label": {"en": "lines of JavaScript in this README", "bg": "реда JavaScript в този README"}}
+      ]
+    },
+    {
+      "type": "heading",
+      "anchor": "stack",
+      "kicker": {"en": "Technology", "bg": "Технологии"},
+      "title": {"en": "Tools I reach for", "bg": "Инструменти, които ползвам"}
+    },
+    {
+      "type": "stack",
+      "title": {"en": "Daily drivers", "bg": "Всекидневни инструменти"},
+      "items": ["typescript", "javascript", "python", "react", "nextdotjs", "nodedotjs", "tailwindcss", "postgresql",
+                "supabase", "docker", "githubactions", "cloudflareworkers", "discorddotjs", "figma", "git", "linux"]
+    },
+    {"type": "divider"},
+    {
+      "type": "heading",
+      "anchor": "process",
+      "kicker": {"en": "Process", "bg": "Процес"},
+      "title": {"en": "How a project moves", "bg": "Как се движи един проект"}
+    },
+    {
+      "type": "timeline",
+      "steps": [
+        {"title": {"en": "Discover", "bg": "Проучване"}, "text": {"en": "Goals, users and constraints", "bg": "Цели, потребители и ограничения"}},
+        {"title": {"en": "Design", "bg": "Дизайн"}, "text": {"en": "Interface, architecture and scope", "bg": "Интерфейс, архитектура и обхват"}},
+        {"title": {"en": "Build", "bg": "Разработка"}, "text": {"en": "Features, integrations and tests", "bg": "Функции, интеграции и тестове"}},
+        {"title": {"en": "Launch", "bg": "Публикуване"}, "text": {"en": "Deploy, document, improve", "bg": "Публикуване, документация, развитие"}}
+      ]
+    },
+    {"type": "divider"},
+    {
+      "type": "heading",
+      "anchor": "contact",
+      "kicker": {"en": "Contact", "bg": "Контакт"},
+      "title": {"en": "Let's build something", "bg": "Да създадем нещо"}
+    },
+    {
+      "type": "contact",
+      "buttons": [
+        {"kind": "mail", "value": "alex@example.com", "href": "mailto:alex@example.com"},
+        {"kind": "discord", "value": "your.name"},
+        {"kind": "github", "value": "@your-username", "href": "https://github.com/yyakowvw/readme-studio"}
+      ]
+    },
+    {
+      "type": "footer",
+      "words": {"en": ["WEB", "TOOLS", "BOTS", "AUTOMATION"], "bg": ["УЕБ", "ИНСТРУМЕНТИ", "БОТОВЕ", "АВТОМАТИЗАЦИИ"]},
+      "tagline": {"en": "Built with readme-studio.", "bg": "Създадено с readme-studio."}
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "$comment": "The visuals in this repository's own README. Rebuild with: python scripts/showcase.py",
+  "theme": "aurora",
+  "languages": ["en", "bg"],
+  "assets": "assets",
+  "write_readme": false,
+  "sections": [
+    {
+      "type": "hero",
+      "kicker": {"en": "readme-studio · open source", "bg": "readme-studio · отворен код"},
+      "headline": {"en": ["Your GitHub profile,", "in motion."], "bg": ["Вашият GitHub профил,", "в движение."]},
+      "lines": {
+        "en": ["One JSON file → animated, bilingual README", "Pure SVG · zero JavaScript · respects reduced motion"],
+        "bg": ["Един JSON файл → анимиран двуезичен README", "Чист SVG · нула JavaScript · уважава намаленото движение"]
+      },
+      "chips": ["Hero", "Projects", "Stack", "Timeline"]
+    },
+    {
+      "type": "highlights",
+      "items": [
+        {"value": "9", "label": {"en": "animated components", "bg": "анимирани компонента"}},
+        {"value": "4", "label": {"en": "built-in themes", "bg": "вградени теми"}},
+        {"value": "174", "label": {"en": "bundled brand icons", "bg": "вградени икони на марки"}},
+        {"value": "0", "label": {"en": "external requests at view time", "bg": "външни заявки при разглеждане"}}
+      ]
+    },
+    {
+      "type": "timeline",
+      "kicker": {"en": "Four steps", "bg": "Четири стъпки"},
+      "steps": [
+        {"title": {"en": "Copy", "bg": "Копирайте"}, "text": {"en": "Start from examples/profile.json", "bg": "Започнете от examples/profile.json"}},
+        {"title": {"en": "Edit", "bg": "Редактирайте"}, "text": {"en": "Your text, projects, stack and theme", "bg": "Вашият текст, проекти, технологии и тема"}},
+        {"title": {"en": "Build", "bg": "Генерирайте"}, "text": {"en": "python -m studio build", "bg": "python -m studio build"}},
+        {"title": {"en": "Push", "bg": "Публикувайте"}, "text": {"en": "Or let the GitHub Action rebuild it", "bg": "Или оставете GitHub Action да го направи"}}
+      ]
+    },
+    {
+      "type": "stack",
+      "title": {"en": "A taste of the bundled icons", "bg": "Част от вградените икони"},
+      "items": ["typescript", "python", "rust", "go", "swift", "kotlin", "react", "svelte", "nextdotjs", "vuedotjs",
+                "nodedotjs", "deno", "postgresql", "supabase", "docker", "kubernetes", "githubactions", "cloudflare",
+                "unity", "godotengine", "fivem", "discorddotjs", "figma", "anthropic"]
+    },
+    {"type": "divider", "motif": "waves"},
+    {
+      "type": "footer",
+      "words": {"en": ["SVG", "CSS MOTION", "BILINGUAL", "ACCESSIBLE", "MIT"], "bg": ["SVG", "CSS ДВИЖЕНИЕ", "ДВУЕЗИЧНО", "ДОСТЪПНО", "MIT"]},
+      "tagline": {"en": "Made to be forked.", "bg": "Направено, за да се копира."}
+    }
+  ]
+}
