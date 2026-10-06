@@ -20,7 +20,7 @@
   <img src="docs/assets/01-highlights-bg.svg" width="100%" alt="9 анимирани компонента, 4 вградени теми, 174 вградени икони на марки, 0 външни заявки при разглеждане.">
 </picture>
 
-<a href="https://github.com/yyakowvw/readme-studio/blob/main/docs/video/demo.mp4"><img src="docs/video/demo-poster.jpg" width="100%" alt="60-секундно демо: една команда, няколко отговора и готов анимиран профил."></a>
+<img src="docs/video/demo-bg.webp" width="100%" alt="60-секундно демо: една команда в терминала, няколко отговора и готов анимиран GitHub профил.">
 
 <p align="center"><sub>▶ <b>60-секундно демо</b>: една команда, няколко отговора и готов анимиран профил.</sub></p>
 
