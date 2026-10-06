@@ -17,27 +17,12 @@
 
 <picture>
   <source media="(max-width: 600px)" srcset="docs/assets/01-highlights-bg-mobile.svg">
-  <img src="docs/assets/01-highlights-bg.svg" width="100%" alt="9 анимирани компонента, 4 вградени теми, 174 вградени икони на марки, 0 външни заявки при разглеждане.">
+  <img src="docs/assets/01-highlights-bg.svg" width="100%" alt="9 анимирани компонента, 18 вградени теми, 174 вградени икони на марки, 0 външни заявки при разглеждане.">
 </picture>
 
 <img src="docs/video/demo-bg.webp" width="100%" alt="60-секундно демо: една команда в терминала, няколко отговора и готов анимиран GitHub профил.">
 
 <p align="center"><sub>▶ <b>60-секундно демо</b>: една команда, няколко отговора и готов анимиран профил.</sub></p>
-
-## Защо изглежда еднакво навсякъде
-
-GitHub показва изображенията в README през прокси, което премахва скриптове, уеб шрифтове и външни ресурси. Повечето
-анимирани README файлове се чупят от това или зависят от чужд сървър, който рано или късно спира. readme-studio е
-изграден около тези ограничения:
-
-| Проблем | Какво прави readme-studio |
-| --- | --- |
-| Уеб шрифтовете са блокирани | Заглавията се **превръщат в SVG контури** с шрифта [Unbounded](https://github.com/googlefonts/unbounded) (латиница + кирилица). Текстът остава в `<title>`/`<desc>` и в alt. |
-| Външните джаджи спират | **Нула мрежови заявки.** Всички икони, градиенти и анимации са вътре във файла. |
-| Движението може да пречи | Цялата анимация е в `@media (prefers-reduced-motion: no-preference)`. Ако изключите движението в системата, всяко изображение показва завършена статична композиция. |
-| Текстът на телефон е дребен | Всеки компонент има **мобилен вариант** от 600 px, който се сменя чрез `<picture>`. |
-| Един език не стига | Всеки текст може да е `{"en": "...", "bg": "..."}`. Получавате `README.md` и `README.<език>.md` с превключвател. |
-| Счупените изображения изглеждат непрофесионално | `python -m studio lint` проверява за липсващи файлове, скриптове, външни връзки, тежки SVG файлове и анимации извън заявката за намалено движение. |
 
 ## Бърз старт
 
@@ -103,17 +88,38 @@ python -m studio build ~/my-profile/profile.json
 
 Резултат: `assets/studio/*.svg`, `README.md` и по един `README.<език>.md` за всеки допълнителен език, до вашия конфигурационен файл.
 
+## 🎨 Направете го ваш
+
+Настройката не ви налага нищо:
+
+- **Всеки текст се редактира.** Всеки въпрос показва предложение: Enter го запазва, можете да напишете свой текст, а `-` премахва елемента напълно.
+- **Изберете какво да има.** Включвате и изключвате секции: въвеждащ банер, за мен, проекти, технологии, числа, как работя, бутони за контакт, финален банер, разделители и превключвател на езика. Украсите на въвеждащия банер (планети, светеща мрежа, звезди, светлинен лъч, сияние, светеща линия) се махат поотделно.
+- **Всякакви цветове.** Изберете една от 18 теми, съчетайте я с един от 8 фона, напишете свои цветове с име (`розов, тюркоаз, златен`) или hex (`#FACC15`), или пускайте случайни палитри, докато ви хареса.
+
+Пуснете същата команда отново, когато искате промяна. Всички предишни отговори са попълнени.
+
 ## Теми
 
-`"theme": "aurora" | "sunset" | "ocean" | "matrix"`. Всеки цвят може да се смени с `"colors": {"accents": [...]}`.
+18 теми, 8 фона (`midnight`, `black`, `navy`, `forest`, `wine`, `plum`, `slate`, `espresso`) и всякакви цветове по ваш избор:
 
-| aurora | sunset |
-| --- | --- |
-| <img src="docs/themes/aurora.svg" alt="Тема aurora"> | <img src="docs/themes/sunset.svg" alt="Тема sunset"> |
-| <img src="docs/themes/aurora-project.svg" alt="Карта на проект, тема aurora"> | <img src="docs/themes/sunset-project.svg" alt="Карта на проект, тема sunset"> |
-| **ocean** | **matrix** |
-| <img src="docs/themes/ocean.svg" alt="Тема ocean"> | <img src="docs/themes/matrix.svg" alt="Тема matrix"> |
-| <img src="docs/themes/ocean-project.svg" alt="Карта на проект, тема ocean"> | <img src="docs/themes/matrix-project.svg" alt="Карта на проект, тема matrix"> |
+```json
+"theme": "neon",
+"colors": {"background": "navy", "accents": ["розов", "тюркоаз", "#FACC15"]}
+```
+
+| **aurora** | **sunset** | **ocean** |
+| --- | --- | --- |
+| <img src="docs/themes/aurora.svg" alt="Тема aurora"> | <img src="docs/themes/sunset.svg" alt="Тема sunset"> | <img src="docs/themes/ocean.svg" alt="Тема ocean"> |
+| **matrix** | **neon** | **candy** |
+| <img src="docs/themes/matrix.svg" alt="Тема matrix"> | <img src="docs/themes/neon.svg" alt="Тема neon"> | <img src="docs/themes/candy.svg" alt="Тема candy"> |
+| **rose** | **forest** | **ice** |
+| <img src="docs/themes/rose.svg" alt="Тема rose"> | <img src="docs/themes/forest.svg" alt="Тема forest"> | <img src="docs/themes/ice.svg" alt="Тема ice"> |
+| **ember** | **gold** | **mono** |
+| <img src="docs/themes/ember.svg" alt="Тема ember"> | <img src="docs/themes/gold.svg" alt="Тема gold"> | <img src="docs/themes/mono.svg" alt="Тема mono"> |
+| **cyber** | **lavender** | **coral** |
+| <img src="docs/themes/cyber.svg" alt="Тема cyber"> | <img src="docs/themes/lavender.svg" alt="Тема lavender"> | <img src="docs/themes/coral.svg" alt="Тема coral"> |
+| **galaxy** | **mint** | **retro** |
+| <img src="docs/themes/galaxy.svg" alt="Тема galaxy"> | <img src="docs/themes/mint.svg" alt="Тема mint"> | <img src="docs/themes/retro.svg" alt="Тема retro"> |
 
 ## Компоненти
 
@@ -148,7 +154,7 @@ python -m studio build ~/my-profile/profile.json
 ## Разработка
 
 ```bash
-python -m unittest discover tests     # 17 теста
+python -m unittest discover tests     # 20 теста
 python scripts/showcase.py            # обновява docs/ и examples/
 ```
 

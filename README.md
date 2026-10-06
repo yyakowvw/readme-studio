@@ -16,26 +16,12 @@ a self-contained SVG that works inside GitHub's image sanitiser. Nothing loads a
 
 <picture>
   <source media="(max-width: 600px)" srcset="docs/assets/01-highlights-en-mobile.svg">
-  <img src="docs/assets/01-highlights-en.svg" width="100%" alt="9 animated components, 4 built-in themes, 174 bundled brand icons, 0 external requests at view time.">
+  <img src="docs/assets/01-highlights-en.svg" width="100%" alt="9 animated components, 18 built-in themes, 174 bundled brand icons, 0 external requests at view time.">
 </picture>
 
 <img src="docs/video/demo-en.webp" width="100%" alt="55-second demo: one command in the terminal, a few answers, and a finished animated GitHub profile.">
 
 <p align="center"><sub>▶ <b>55-second demo</b>: one command, a few answers, a finished animated profile.</sub></p>
-
-## Why it looks the same everywhere
-
-GitHub serves README images through a proxy that strips scripts, web fonts and remote resources. Most animated READMEs
-break against that, or depend on a third-party server that eventually goes down. readme-studio is built around those limits:
-
-| Problem | What readme-studio does |
-| --- | --- |
-| Web fonts are blocked | Headlines are **outlined into SVG paths** with [Unbounded](https://github.com/googlefonts/unbounded) (latin + cyrillic). The text is still in `<title>`/`<desc>` and the alt text. |
-| Remote widgets go down | **Zero network requests.** Every icon, gradient and animation sits inside the file. |
-| Motion can be uncomfortable | All animation lives inside `@media (prefers-reduced-motion: no-preference)`. Turn motion off in your OS and every image shows a complete static composition. |
-| Phones get tiny text | Every component has a 600 px **mobile variant**, swapped in with `<picture>`. |
-| One language is not enough | Any string can be `{"en": "...", "bg": "..."}`. You get `README.md` plus `README.<lang>.md` with a language switch. |
-| Broken images look amateur | `python -m studio lint` checks for missing files, scripts, remote links, oversized SVGs and animation outside the reduced-motion query. |
 
 ## Quick start
 
@@ -101,17 +87,38 @@ python -m studio build ~/my-profile/profile.json
 
 Output: `assets/studio/*.svg`, `README.md` and one `README.<lang>.md` per extra language, next to your config.
 
+## 🎨 Make it yours
+
+The setup never forces anything on you:
+
+- **Every text is editable.** Each question shows a suggestion: press Enter to keep it, type your own text, or type `-` to leave that element out completely.
+- **Choose what appears.** Switch sections on and off: intro banner, about me, projects, technologies, numbers, how I work, contact buttons, closing banner, dividers and the language switch. The intro banner's decorations (planets, glowing grid, stars, light sweep, colour glow, light bar) can be switched off one by one.
+- **Any colour combination.** Pick one of 18 themes, combine it with one of 8 backgrounds, type your own colours by name (`pink, cyan, gold`) or hex (`#FACC15`), or roll random palettes until one feels right.
+
+Run the same command again whenever you want to change something. Every answer you gave is pre-filled.
+
 ## Themes
 
-`"theme": "aurora" | "sunset" | "ocean" | "matrix"`. You can override any colour with `"colors": {"accents": [...]}`.
+18 themes, 8 backgrounds (`midnight`, `black`, `navy`, `forest`, `wine`, `plum`, `slate`, `espresso`) and any colours you like:
 
-| aurora | sunset |
-| --- | --- |
-| <img src="docs/themes/aurora.svg" alt="Aurora theme hero"> | <img src="docs/themes/sunset.svg" alt="Sunset theme hero"> |
-| <img src="docs/themes/aurora-project.svg" alt="Aurora theme project card"> | <img src="docs/themes/sunset-project.svg" alt="Sunset theme project card"> |
-| **ocean** | **matrix** |
-| <img src="docs/themes/ocean.svg" alt="Ocean theme hero"> | <img src="docs/themes/matrix.svg" alt="Matrix theme hero"> |
-| <img src="docs/themes/ocean-project.svg" alt="Ocean theme project card"> | <img src="docs/themes/matrix-project.svg" alt="Matrix theme project card"> |
+```json
+"theme": "neon",
+"colors": {"background": "navy", "accents": ["pink", "cyan", "#FACC15"]}
+```
+
+| **aurora** | **sunset** | **ocean** |
+| --- | --- | --- |
+| <img src="docs/themes/aurora.svg" alt="aurora theme"> | <img src="docs/themes/sunset.svg" alt="sunset theme"> | <img src="docs/themes/ocean.svg" alt="ocean theme"> |
+| **matrix** | **neon** | **candy** |
+| <img src="docs/themes/matrix.svg" alt="matrix theme"> | <img src="docs/themes/neon.svg" alt="neon theme"> | <img src="docs/themes/candy.svg" alt="candy theme"> |
+| **rose** | **forest** | **ice** |
+| <img src="docs/themes/rose.svg" alt="rose theme"> | <img src="docs/themes/forest.svg" alt="forest theme"> | <img src="docs/themes/ice.svg" alt="ice theme"> |
+| **ember** | **gold** | **mono** |
+| <img src="docs/themes/ember.svg" alt="ember theme"> | <img src="docs/themes/gold.svg" alt="gold theme"> | <img src="docs/themes/mono.svg" alt="mono theme"> |
+| **cyber** | **lavender** | **coral** |
+| <img src="docs/themes/cyber.svg" alt="cyber theme"> | <img src="docs/themes/lavender.svg" alt="lavender theme"> | <img src="docs/themes/coral.svg" alt="coral theme"> |
+| **galaxy** | **mint** | **retro** |
+| <img src="docs/themes/galaxy.svg" alt="galaxy theme"> | <img src="docs/themes/mint.svg" alt="mint theme"> | <img src="docs/themes/retro.svg" alt="retro theme"> |
 
 ## Components
 
@@ -146,7 +153,7 @@ The demo profile is a fictional person, so replace every word of it before you p
 ## Development
 
 ```bash
-python -m unittest discover tests     # 17 tests
+python -m unittest discover tests     # 20 tests
 python scripts/showcase.py            # rebuild docs/ and examples/
 ```
 

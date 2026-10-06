@@ -118,6 +118,7 @@ def hero(sec, t, lang, mobile):
     head = head if isinstance(head, list) else [head]
     lines = loc(sec.get('lines', []), lang)
     chips = loc(sec.get('chips', []), lang)[:4]
+    deco = {'orbit': True, 'floor': True, 'stars': True, 'beam': True, 'glow': True, 'bar': True, **sec.get('decor', {})}
     w = 600 if mobile else 1200
     x0 = 32 if mobile else 72
     tw = w - 2 * x0 if mobile else 640
@@ -145,11 +146,12 @@ def hero(sec, t, lang, mobile):
         body += chip_svg
         y = bottom
     text_bottom = y
+    scenery = deco['orbit'] or deco['floor']
     if mobile:
-        h = round(text_bottom + 420)
+        h = round(text_bottom + (420 if scenery else 80))
         cx, cy, k = 300, text_bottom + 190, .72
     else:
-        h = max(560, round(text_bottom + 90))
+        h = max(560 if scenery else 0, round(text_bottom + 90))
         cx, cy, k = 918, h * .48, 1.0
     tilt = -16
     defs = (linear('bg', [(0, t.night), (.55, t.mid), (1, t.deep)], x2=1, y2=1)
@@ -177,11 +179,14 @@ def hero(sec, t, lang, mobile):
               f'@keyframes beam{{0%,20%{{transform:translateX(-500px)}}70%,100%{{transform:translateX({w + 300}px)}}}}'
               f'@keyframes spark{{0%{{transform:translateX(0);opacity:0}}8%{{opacity:1}}85%{{opacity:1}}100%{{transform:translateX({w - 2 * x0 - 140}px);opacity:0}}}}')
     b = frame(w, h) + '<g clip-path="url(#frame)">'
-    b += (f'<g class="b1"><circle cx="{w * .8:.0f}" cy="{h * .2:.0f}" r="{380 * k:.0f}" fill="url(#r0)"/></g>'
+    glow = (f'<g class="b1"><circle cx="{w * .8:.0f}" cy="{h * .2:.0f}" r="{380 * k:.0f}" fill="url(#r0)"/></g>'
           f'<g class="b2"><circle cx="{w * .92:.0f}" cy="{h * .85:.0f}" r="{320 * k:.0f}" fill="url(#r1)"/></g>'
           f'<g class="b3"><circle cx="{w * .2:.0f}" cy="{h * .98:.0f}" r="{340 * k:.0f}" fill="url(#r2)"/></g>'
           f'<g class="b4"><circle cx="{w * .52:.0f}" cy="{h * .05:.0f}" r="{220 * k:.0f}" fill="url(#r3)"/></g>')
-    b += stars(w, h, 45 if mobile else 70, 7)
+    if deco['glow']:
+        b += glow
+    if deco['stars']:
+        b += stars(w, h, 45 if mobile else 70, 7)
     floor = ''.join(f'<path d="M{cx + i * 16 * k:.0f} {horizon:.0f}L{cx + i * 120 * k:.0f} {h}" stroke="{t.accent(0)}" stroke-opacity=".28"/>'
                     for i in range(-14, 15))
     for i in range(1, 6):
@@ -190,14 +195,16 @@ def hero(sec, t, lang, mobile):
     floor += '<g class="live">' + ''.join(
         f'<path class="fl" style="animation-delay:-{i * 1.6:.1f}s" d="M0 {horizon:.0f}H{w}" stroke="{t.accent(3)}" stroke-opacity=".55"/>'
         for i in range(5)) + '</g>'
-    b += f'<g mask="url(#fadeY)">{floor}</g>'
-    b += f'<g class="live"><rect class="beam" x="0" y="-200" width="160" height="{h + 400}" fill="url(#beam)" transform="rotate(18 {w / 2} {h / 2})"/></g>'
+    if deco['floor']:
+        b += f'<g mask="url(#fadeY)">{floor}</g>'
+    if deco['beam']:
+        b += f'<g class="live"><rect class="beam" x="0" y="-200" width="160" height="{h + 400}" fill="url(#beam)" transform="rotate(18 {w / 2} {h / 2})"/></g>'
     orbits = [(255, 90, 24, 30), (190, 66, 17, 200), (126, 44, 12, 110), (255, 90, 34, 210)]
-    b += f'<circle class="halo" cx="{cx}" cy="{cy:.0f}" r="{150 * k:.0f}" fill="url(#r1)"/>'
-    b += f'<g transform="rotate({tilt} {cx} {cy:.0f})">' + ''.join(
+    orbit = f'<circle class="halo" cx="{cx}" cy="{cy:.0f}" r="{150 * k:.0f}" fill="url(#r1)"/>'
+    orbit += f'<g transform="rotate({tilt} {cx} {cy:.0f})">' + ''.join(
         f'<path d="{ellipse_path(cx, cy, rx * k, ry * k)}" fill="none" stroke="url(#o{i})" stroke-width="1.6"/>'
         for i, (rx, ry, _d, _s) in enumerate(orbits[:3])) + '</g>'
-    b += (f'<circle class="ring2" cx="{cx}" cy="{cy:.0f}" r="{80 * k:.0f}" fill="none" stroke="{t.soft}" stroke-opacity=".35" stroke-dasharray="2 9"/>'
+    orbit += (f'<circle class="ring2" cx="{cx}" cy="{cy:.0f}" r="{80 * k:.0f}" fill="none" stroke="{t.soft}" stroke-opacity=".35" stroke-dasharray="2 9"/>'
           f'<circle class="ring" cx="{cx}" cy="{cy:.0f}" r="{62 * k:.0f}" fill="none" stroke="{t.accent(1)}" stroke-opacity=".55" stroke-width="1.5" stroke-dasharray="60 30 8 30"/>'
           f'<circle cx="{cx}" cy="{cy:.0f}" r="{44 * k:.0f}" fill="url(#core)"/>')
     live, still = '', ''
@@ -209,11 +216,14 @@ def hero(sec, t, lang, mobile):
                  f'begin="-{dur * start / 360:.2f}s" path="{ellipse_path(cx, cy, rx * k, ry * k)}"/></g></g>')
         px, py = on_ellipse(cx, cy, rx * k, ry * k, tilt, 180 + start)
         still += f'<g transform="translate({px:.1f} {py:.1f})">{dot}</g>'
-    b += f'<g class="live">{live}</g><g class="still">{still}</g>'
+    orbit += f'<g class="live">{live}</g><g class="still">{still}</g>'
+    if deco['orbit']:
+        b += orbit
     b += body
     base = h - 34
-    b += f'<rect x="{x0}" y="{base}" width="{w - 2 * x0}" height="3" rx="1.5" fill="url(#acc)" opacity=".85"/>'
-    b += f'<g class="live"><rect class="spark" x="{x0}" y="{base - 2}" width="140" height="7" rx="3.5" fill="#fff" opacity=".85"/></g>'
+    if deco['bar']:
+        b += f'<rect x="{x0}" y="{base}" width="{w - 2 * x0}" height="3" rx="1.5" fill="url(#acc)" opacity=".85"/>'
+        b += f'<g class="live"><rect class="spark" x="{x0}" y="{base - 2}" width="140" height="7" rx="3.5" fill="#fff" opacity=".85"/></g>'
     b += '</g>'
     title = ' '.join(head)
     alt = ' · '.join(x for x in [kicker, title] if x)
@@ -508,7 +518,9 @@ def stack(sec, t, lang, mobile, index=0):
     b += (f'<g class="aur"><circle cx="{w * .85:.0f}" cy="{h * .15:.0f}" r="{max(w, h) * .45:.0f}" fill="url(#au1)"/></g>'
           f'<g class="aur2"><circle cx="{w * .12:.0f}" cy="{h * .9:.0f}" r="{max(w, h) * .38:.0f}" fill="url(#au2)"/></g>')
     b += f'<rect x="0" y="0" width="{w}" height="4" fill="url(#g)"/>'
-    b += text(x0, 52, f'{n} {ui(lang, "tech")}'.upper(), 18 if mobile else 13, a1, 800, spacing=2.4)
+    kicker = loc(sec['kicker'], lang) if 'kicker' in sec else f'{n} {ui(lang, "tech")}'
+    if kicker:
+        b += text(x0, 52, kicker.upper(), 18 if mobile else 13, a1, 800, spacing=2.4)
     for i, line in enumerate(title_lines):
         b += text(x0, 96 + i * 40, line, 33 if mobile else 31, t.text, 800)
     colors = {}
@@ -554,7 +566,7 @@ def stack(sec, t, lang, mobile, index=0):
 # ---------------------------------------------------------------- timeline
 def timeline(sec, t, lang, mobile, index=0):
     steps = [(loc(s.get('title'), lang), loc(s.get('text'), lang)) for s in sec.get('steps', [])]
-    kicker = loc(sec.get('kicker'), lang) or f'{len(steps)} {ui(lang, "steps")}'
+    kicker = loc(sec['kicker'], lang) if 'kicker' in sec else f'{len(steps)} {ui(lang, "steps")}'
     n = len(steps)
     period = 2.4 * n
     colors = [t.accent(i) for i in range(n)]
@@ -579,7 +591,8 @@ def timeline(sec, t, lang, mobile, index=0):
               '.aur{animation:aur 30s ease-in-out infinite}@keyframes aur{50%{transform:translate(60px,-30px)}}')
     b = frame(w, h, 28) + '<g clip-path="url(#frame)">'
     b += f'<g class="aur"><circle cx="{w * .5:.0f}" cy="{h * .5:.0f}" r="{max(w, h) * .45:.0f}" fill="url(#au)"/></g>'
-    b += text(32 if mobile else 40, 52, kicker.upper(), 18 if mobile else 13, t.soft, 800, spacing=2.4)
+    if kicker:
+        b += text(32 if mobile else 40, 52, kicker.upper(), 18 if mobile else 13, t.soft, 800, spacing=2.4)
     b += f'<path d="{path}" fill="none" stroke="url(#rib)" stroke-width="10" stroke-opacity=".18" stroke-linecap="round"/>'
     b += f'<path d="{path}" fill="none" stroke="url(#rib)" stroke-width="2.5" stroke-linecap="round"/>'
     cw = (w - 260) / max(n - 1, 1) - 16 if not mobile else 420

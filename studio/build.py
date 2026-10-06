@@ -97,7 +97,7 @@ def build(config_path, root=None):
     readmes = {}
     for lang in langs:
         md = []
-        if len(langs) > 1:
+        if len(langs) > 1 and config.get('language_switch', True):
             switch = []
             for code in langs:
                 svg, _ = comp.language_pill(code, code == lang, theme)

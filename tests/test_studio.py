@@ -136,25 +136,90 @@ if __name__ == '__main__':
 
 
 class WizardTests(unittest.TestCase):
-    ANSWERS = ['1', 'demo-user', 'Demo Person', 'web developer', 'I build things', 'that work.', 'Web · bots', '',
-               'Shop', 'Online store', 'A fast store.', 'React, Stripe', 'shop.example.com', '',
-               'react, python, UnknownTool', 'n', 'demo@example.com', 'demo.dev', '', '', '', '', '', '', '2']
+    """Drive the setup with scripted answers matched by question text."""
+
+    def run_wizard(self, script, tmp):
+        import builtins
+        import contextlib
+        import io
+        from studio import wizard
+        script = list(script)
+
+        def fake(prompt=''):
+            for i, (needle, answer) in enumerate(script):
+                if needle in prompt:
+                    script.pop(i)
+                    return answer
+            return ''
+        original = builtins.input
+        builtins.input, wizard.detect_user = fake, (lambda: '')
+        try:
+            with contextlib.redirect_stdout(io.StringIO()):
+                code = wizard.main(['--ui', 'en', '--dir', tmp, '--no-open', '--no-publish'])
+        finally:
+            builtins.input = original
+        return code, json.loads((Path(tmp) / 'profile.json').read_text())
 
     def test_answers_become_a_valid_profile(self):
-        import subprocess
+        script = [('Profile languages', '1'), ('GitHub username', 'demo-user'), ('Your name', 'Demo Person'),
+                  ('Headline, line 1', 'I build things'), ('1. Project name', 'Shop'), ('One-sentence', 'A fast store.'),
+                  ('Link', 'shop.example.com'), ('Your technologies', 'react, python, UnknownTool'),
+                  ('Email', 'demo@example.com'), ('Theme', '2')]
         with tempfile.TemporaryDirectory() as tmp:
-            run = subprocess.run([sys.executable, '-m', 'studio', 'init', '--ui', 'en', '--dir', tmp, '--no-open', '--no-publish'],
-                                 input='\n'.join(self.ANSWERS) + '\n', capture_output=True, text=True, cwd=ROOT, timeout=120)
-            self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
-            config = json.loads((Path(tmp) / 'profile.json').read_text())
+            code, config = self.run_wizard(script, tmp)
+            self.assertEqual(code, 0)
             self.assertEqual(validate(config), [])
             self.assertEqual(config['theme'], 'sunset')
             self.assertEqual(config['repository'], 'demo-user/demo-user')
-            kinds = [s['type'] for s in config['sections']]
-            self.assertIn('projects', kinds)
-            self.assertNotIn('timeline', kinds)
             project = next(s for s in config['sections'] if s['type'] == 'projects')['items'][0]
             self.assertEqual(project['url'], 'https://shop.example.com')
-            self.assertTrue((Path(tmp) / 'README.md').is_file())
             self.assertTrue((Path(tmp) / '.github/workflows/profile.yml').is_file())
             self.assertEqual(lint(tmp), [])
+
+    def test_anything_can_be_skipped_or_removed(self):
+        script = [('Profile languages', '2'), ('switch items', '4 6 10'), ('switch items', ''), ('Your name', 'Demo'),
+                  ('label at the top', '-'), ('Headline, line 1', 'Hello'), ('↳', 'Здравейте'), ('Headline, line 2', '-'),
+                  ('switch items', '1 2 3'), ('switch items', ''), ('Greeting', '-'), ('paragraph', '-'),
+                  ('Small label above', '-'), ('Section title', '-'), ('1. Project name', 'Shop'), ('Labels in the banner', '-'),
+                  ('Email', 'demo@example.com'), ('Button label', '-'), ('Word badges', '-'), ('Closing sentence', '-'),
+                  ('Theme', 'c'), ('Your colours', 'pink, not-a-colour'), ('Your colours', 'pink, #22d3ee'), ('Background', 'wine')]
+        with tempfile.TemporaryDirectory() as tmp:
+            code, config = self.run_wizard(script, tmp)
+            self.assertEqual(code, 0)
+            kinds = [s['type'] for s in config['sections']]
+            self.assertNotIn('stack', kinds)
+            self.assertNotIn('timeline', kinds)
+            self.assertNotIn('markdown', kinds)
+            self.assertNotIn('footer', kinds)
+            self.assertNotIn('heading', [s['type'] for s in config['sections'][:3]])
+            hero = config['sections'][0]
+            self.assertEqual(hero['headline'], {'en': ['Hello'], 'bg': ['Здравейте']})
+            self.assertEqual(hero['kicker'], '')
+            self.assertEqual(hero['chips'], [])
+            self.assertFalse(hero['decor']['orbit'])
+            self.assertEqual(config['language_switch'], False)
+            self.assertEqual(config['colors'], {'accents': ['#EC4899', '#22D3EE'], 'background': 'wine'})
+            self.assertEqual(lint(tmp), [])
+            self.assertNotIn('README.bg.md">', (Path(tmp) / 'README.md').read_text())
+
+
+class ColorTests(unittest.TestCase):
+    def test_names_hex_and_backgrounds(self):
+        from studio.style import BACKGROUNDS, parse_color, random_palette
+        self.assertEqual(parse_color('violet'), '#8B5CF6')
+        self.assertEqual(parse_color('лилав'), '#8B5CF6')
+        self.assertEqual(parse_color('#abc'), '#AABBCC')
+        self.assertIsNone(parse_color('nope'))
+        theme = Theme('ocean', {'accents': ['pink', '#0f0'], 'background': 'wine'})
+        self.assertEqual(theme.accents, ['#EC4899', '#00FF00', '#EC4899', '#00FF00', '#EC4899'])
+        self.assertEqual(theme.night, BACKGROUNDS['wine']['night'])
+        self.assertEqual(len(random_palette(1)), 5)
+        self.assertGreaterEqual(len(THEMES), 18)
+
+    def test_every_theme_and_background_renders(self):
+        from studio.style import BACKGROUNDS
+        hero = next(s for s in EXAMPLE['sections'] if s['type'] == 'hero')
+        for name in THEMES:
+            for bg in BACKGROUNDS:
+                svg, _ = comp.hero(hero, Theme(name, {'background': bg}), 'en', False)
+                self.assertTrue(svg.startswith('<svg'))

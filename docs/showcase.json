@@ -19,7 +19,7 @@
       "type": "highlights",
       "items": [
         {"value": "9", "label": {"en": "animated components", "bg": "анимирани компонента"}},
-        {"value": "4", "label": {"en": "built-in themes", "bg": "вградени теми"}},
+        {"value": "18", "label": {"en": "built-in themes", "bg": "вградени теми"}},
         {"value": "174", "label": {"en": "bundled brand icons", "bg": "вградени икони на марки"}},
         {"value": "0", "label": {"en": "external requests at view time", "bg": "външни заявки при разглеждане"}}
       ]
