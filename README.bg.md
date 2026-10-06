@@ -39,7 +39,7 @@ GitHub показва изображенията в README през прокси
 
 <picture>
   <source media="(max-width: 600px)" srcset="docs/assets/02-timeline-bg-mobile.svg">
-  <img src="docs/assets/02-timeline-bg.svg" width="100%" alt="Четири стъпки: копирайте examples/profile.json, редактирайте текста, проектите, технологиите и темата, генерирайте с python -m studio build, публикувайте или оставете GitHub Action да го направи.">
+  <img src="docs/assets/02-timeline-bg.svg" width="100%" alt="Четири стъпки: копирайте examples/profile.json, редактирайте текста, проектите, технологиите и темата, изградете с python -m studio build, публикувайте или оставете GitHub Action да го направи.">
 </picture>
 
 ### Вариант А: GitHub Action (без нищо на компютъра)
@@ -65,7 +65,7 @@ jobs:
           config: profile.json
 ```
 
-При всяка промяна на `profile.json` изображенията и README се генерират отново и се записват обратно в хранилището.
+При всяка промяна на `profile.json` изображенията и README се обновяват автоматично и се записват обратно в хранилището.
 
 ### Вариант Б: на вашия компютър
 
@@ -125,7 +125,7 @@ python -m studio build ~/my-profile/profile.json
 
 ```bash
 python -m unittest discover tests     # 16 теста
-python scripts/showcase.py            # генерира отново docs/ и examples/
+python scripts/showcase.py            # обновява docs/ и examples/
 ```
 
 CI пуска тестовете при всяка промяна и спира, ако записаните SVG файлове не могат да се получат отново от конфигурациите.

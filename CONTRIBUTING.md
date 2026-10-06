@@ -13,7 +13,7 @@ Before opening a pull request:
 
 ```bash
 python -m unittest discover tests
-python scripts/showcase.py   # commit the regenerated docs/ and examples/
+python scripts/showcase.py   # commit the rebuilt docs/ and examples/
 ```
 
 New components are very welcome: add the function to `studio/components.py`, wire it into `studio/build.py`,

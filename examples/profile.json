@@ -17,8 +17,8 @@
     {
       "type": "markdown",
       "text": {
-        "en": "### 👋 Hi, I'm Alex\n\nI build fast, accessible web products and the tooling around them. This whole page is generated from one JSON file — no JavaScript, no external services.",
-        "bg": "### 👋 Здравейте, аз съм Алекс\n\nСъздавам бързи и достъпни уеб продукти и инструментите около тях. Цялата страница е генерирана от един JSON файл — без JavaScript и без външни услуги."
+        "en": "### 👋 Hi, I'm Alex\n\nI build fast, accessible web products and the tooling around them. Every visual on this page is pure SVG — no JavaScript, no external services.",
+        "bg": "### 👋 Здравейте, аз съм Алекс\n\nСъздавам бързи и достъпни уеб продукти и инструментите около тях. Всяко изображение на тази страница е чист SVG — без JavaScript и без външни услуги."
       }
     },
     {"type": "divider"},
@@ -120,7 +120,7 @@
     {
       "type": "footer",
       "words": {"en": ["WEB", "TOOLS", "BOTS", "AUTOMATION"], "bg": ["УЕБ", "ИНСТРУМЕНТИ", "БОТОВЕ", "АВТОМАТИЗАЦИИ"]},
-      "tagline": {"en": "Built with readme-studio.", "bg": "Създадено с readme-studio."}
+      "tagline": {"en": "Interfaces that move.", "bg": "Интерфейси в движение."}
     }
   ]
 }

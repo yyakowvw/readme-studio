@@ -30,7 +30,7 @@
       "steps": [
         {"title": {"en": "Copy", "bg": "Копирайте"}, "text": {"en": "Start from examples/profile.json", "bg": "Започнете от examples/profile.json"}},
         {"title": {"en": "Edit", "bg": "Редактирайте"}, "text": {"en": "Your text, projects, stack and theme", "bg": "Вашият текст, проекти, технологии и тема"}},
-        {"title": {"en": "Build", "bg": "Генерирайте"}, "text": {"en": "python -m studio build", "bg": "python -m studio build"}},
+        {"title": {"en": "Build", "bg": "Изградете"}, "text": {"en": "python -m studio build", "bg": "python -m studio build"}},
         {"title": {"en": "Push", "bg": "Публикувайте"}, "text": {"en": "Or let the GitHub Action rebuild it", "bg": "Или оставете GitHub Action да го направи"}}
       ]
     },
