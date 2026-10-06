@@ -40,6 +40,26 @@ break against that, or depend on a third-party server that eventually goes down.
   <img src="docs/assets/02-timeline-en.svg" width="100%" alt="Four steps: copy examples/profile.json, edit your text, projects, stack and theme, build with python -m studio build, push or let the GitHub Action rebuild it.">
 </picture>
 
+### ⚡ Fastest: one command, no code
+
+**macOS / Linux**: paste this in Terminal:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/yyakowvw/readme-studio/main/install.sh | bash
+```
+
+**Windows**: [download the ZIP](https://github.com/yyakowvw/readme-studio/archive/refs/heads/main.zip), unzip it and double-click **`setup.bat`**.
+**macOS without Terminal**: download the ZIP and double-click **`Setup Profile.command`**.
+
+The setup asks you a few questions (in English or Bulgarian): your name, headline, projects, technologies, contacts and theme. Then it:
+
+1. builds every animated image and your `README.md` (plus `README.bg.md` if you want two languages);
+2. opens a preview in your browser;
+3. publishes to `github.com/<you>/<you>` when you say yes (uses the GitHub CLI if installed, otherwise `git`);
+4. adds a GitHub Action, so later edits to `profile.json` rebuild the profile on their own.
+
+To change anything later, run the same command again. Your previous answers are pre-filled.
+
 ### Option A: GitHub Action (no local setup)
 
 1. In your profile repository (`<username>/<username>`), add [`examples/profile.json`](examples/profile.json) as `profile.json` and edit it.
@@ -122,7 +142,7 @@ The demo profile is a fictional person, so replace every word of it before you p
 ## Development
 
 ```bash
-python -m unittest discover tests     # 16 tests
+python -m unittest discover tests     # 17 tests
 python scripts/showcase.py            # rebuild docs/ and examples/
 ```
 

@@ -42,6 +42,26 @@ GitHub показва изображенията в README през прокси
   <img src="docs/assets/02-timeline-bg.svg" width="100%" alt="Четири стъпки: копирайте examples/profile.json, редактирайте текста, проектите, технологиите и темата, изградете с python -m studio build, публикувайте или оставете GitHub Action да го направи.">
 </picture>
 
+### ⚡ Най-бързо: една команда, без код
+
+**macOS / Linux**: поставете това в Terminal:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/yyakowvw/readme-studio/main/install.sh | bash
+```
+
+**Windows**: [изтеглете ZIP файла](https://github.com/yyakowvw/readme-studio/archive/refs/heads/main.zip), разархивирайте го и щракнете два пъти върху **`setup.bat`**.
+**macOS без Terminal**: изтеглете ZIP файла и щракнете два пъти върху **`Setup Profile.command`**.
+
+Настройката ви задава няколко въпроса (на български или английски): име, заглавие, проекти, технологии, контакти и тема. След това:
+
+1. създава всички анимирани изображения и вашия `README.md` (и `README.bg.md`, ако искате два езика);
+2. отваря преглед в браузъра;
+3. публикува в `github.com/<вие>/<вие>`, ако потвърдите (с GitHub CLI, ако е инсталиран, иначе с `git`);
+4. добавя GitHub Action, така че по-късните промени в `profile.json` обновяват профила сами.
+
+За промени по-късно пуснете същата команда отново. Предишните отговори са попълнени.
+
 ### Вариант А: GitHub Action (без нищо на компютъра)
 
 1. В профилното си хранилище (`<потребител>/<потребител>`) добавете [`examples/profile.json`](examples/profile.json) като `profile.json` и го редактирайте.
@@ -124,7 +144,7 @@ python -m studio build ~/my-profile/profile.json
 ## Разработка
 
 ```bash
-python -m unittest discover tests     # 16 теста
+python -m unittest discover tests     # 17 теста
 python scripts/showcase.py            # обновява docs/ и examples/
 ```
 

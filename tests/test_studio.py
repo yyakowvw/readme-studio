@@ -133,3 +133,28 @@ class ConfigTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class WizardTests(unittest.TestCase):
+    ANSWERS = ['1', 'demo-user', 'Demo Person', 'web developer', 'I build things', 'that work.', 'Web · bots', '',
+               'Shop', 'Online store', 'A fast store.', 'React, Stripe', 'shop.example.com', '',
+               'react, python, UnknownTool', 'n', 'demo@example.com', 'demo.dev', '', '', '', '', '', '', '2']
+
+    def test_answers_become_a_valid_profile(self):
+        import subprocess
+        with tempfile.TemporaryDirectory() as tmp:
+            run = subprocess.run([sys.executable, '-m', 'studio', 'init', '--ui', 'en', '--dir', tmp, '--no-open', '--no-publish'],
+                                 input='\n'.join(self.ANSWERS) + '\n', capture_output=True, text=True, cwd=ROOT, timeout=120)
+            self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+            config = json.loads((Path(tmp) / 'profile.json').read_text())
+            self.assertEqual(validate(config), [])
+            self.assertEqual(config['theme'], 'sunset')
+            self.assertEqual(config['repository'], 'demo-user/demo-user')
+            kinds = [s['type'] for s in config['sections']]
+            self.assertIn('projects', kinds)
+            self.assertNotIn('timeline', kinds)
+            project = next(s for s in config['sections'] if s['type'] == 'projects')['items'][0]
+            self.assertEqual(project['url'], 'https://shop.example.com')
+            self.assertTrue((Path(tmp) / 'README.md').is_file())
+            self.assertTrue((Path(tmp) / '.github/workflows/profile.yml').is_file())
+            self.assertEqual(lint(tmp), [])

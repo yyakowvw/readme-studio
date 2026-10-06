@@ -1,5 +1,6 @@
 """readme-studio command line.
 
+  python -m studio init                   answer questions, get a finished profile
   python -m studio build [profile.json]   generate SVGs + README files
   python -m studio lint  [profile.json]   check the generated files
   python -m studio themes                 list the built-in themes
@@ -14,8 +15,12 @@ from .style import THEMES
 
 
 def main(argv=None):
+    argv = sys.argv[1:] if argv is None else argv
+    if argv[:1] == ['init']:
+        from .wizard import main as wizard
+        return wizard(argv[1:])
     parser = argparse.ArgumentParser(prog='python -m studio', description='Animated, bilingual GitHub profile READMEs from one JSON file.')
-    parser.add_argument('command', choices=['build', 'lint', 'themes'])
+    parser.add_argument('command', choices=['init', 'build', 'lint', 'themes'])
     parser.add_argument('config', nargs='?', default='profile.json')
     args = parser.parse_args(argv)
     if args.command == 'themes':
