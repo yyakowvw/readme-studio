@@ -58,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: yyakowvw/readme-studio@v1
+      - uses: yyakowvw/readme-studio@main
         with:
           config: profile.json
 ```
