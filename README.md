@@ -19,6 +19,10 @@ a self-contained SVG that works inside GitHub's image sanitiser. Nothing loads a
   <img src="docs/assets/01-highlights-en.svg" width="100%" alt="9 animated components, 4 built-in themes, 174 bundled brand icons, 0 external requests at view time.">
 </picture>
 
+<a href="https://github.com/yyakowvw/readme-studio/blob/main/docs/video/demo.mp4"><img src="docs/video/demo-poster.jpg" width="100%" alt="60-second demo: one command, a few answers, a finished animated profile."></a>
+
+<p align="center"><sub>▶ <b>60-second demo</b>: one command, a few answers, a finished animated profile.</sub></p>
+
 ## Why it looks the same everywhere
 
 GitHub serves README images through a proxy that strips scripts, web fonts and remote resources. Most animated READMEs
